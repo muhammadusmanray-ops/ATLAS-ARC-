@@ -1,0 +1,49 @@
+{
+  "name": "atlas-arc-ml-dashboard",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx server.ts",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@circle-fin/developer-controlled-wallets": "^10.2.0",
+    "@google/genai": "^1.49.0",
+    "@tailwindcss/vite": "^4.2.2",
+    "@tensorflow/tfjs": "^4.22.0",
+    "@types/uuid": "^10.0.0",
+    "axios": "^1.15.0",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.1",
+    "express": "^5.2.1",
+    "lucide-react": "^0.473.0",
+    "ml-random-forest": "^2.1.0",
+    "ml-regression": "^6.3.0",
+    "motion": "^11.18.1",
+    "pg": "^8.20.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.15.0",
+    "simple-statistics": "^7.8.9",
+    "tailwind-merge": "^2.6.0",
+    "tsx": "^4.21.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/pg": "^8.20.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1"
+  }
+}

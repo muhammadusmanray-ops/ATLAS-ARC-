@@ -1,0 +1,5 @@
+{
+  "name": "Atlas Arc ML Dashboard",
+  "description": "A high-performance dashboard for monitoring ML models and agentic economy transactions on Arc L1.",
+  "requestFramePermissions": []
+}

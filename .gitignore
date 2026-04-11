@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Environment Variables (CRITICAL: DO NOT PUSH THESE)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database fallbacks
+ledger.json
+data/
+assets/explorer_proof.png
+assets/dashboard_view.png
+assets/market_view.png
+assets/agents_view.png
+assets/anomaly_view.png
