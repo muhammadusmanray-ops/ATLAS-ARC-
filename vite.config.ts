@@ -8,7 +8,7 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
-    allowedHosts: true,
+    allowedHosts: ['hewjdewjdbqwjdwej-atlasarcdashbord.hf.space', '.hf.space', 'all'],
     watch: {
       ignored: ['**/ledger.json']
     }

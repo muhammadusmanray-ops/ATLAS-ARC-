@@ -589,7 +589,10 @@ async function startServer() {
   // --- Vite Middleware ---
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { 
+        middlewareMode: true,
+        allowedHosts: ['hewjdewjdbqwjdwej-atlasarcdashbord.hf.space', '.hf.space', 'all']
+      },
       appType: "spa",
     });
     app.use(vite.middlewares);
