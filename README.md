@@ -1,25 +1,29 @@
-# ATLAS ARC — Agentic Economy on Arc
+---
+title: Atlas Arc Dashboard
+emoji: ⚡
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+---
 
-![Atlas Arc Banner](./assets/banner.png)
-
-> **Hackathon Track:** 🤖 Agent-to-Agent Payment Loop  
-> **Required Technologies Used:** Arc L1 · USDC · Circle Nanopayments · Circle Programmable Wallets
+> **Required Technologies Used:** Arc L1 Â· USDC Â· Circle Nanopayments Â· Circle Programmable Wallets
 
 ---
 
-## 📋 Project Title
+## ðŸ“‹ Project Title
 **Atlas Arc: ML-Driven Agentic Economy Dashboard**
 
 ---
 
-## 📝 Short Description
-Atlas Arc is a real-time dashboard where 20 autonomous AI agents settle sub-cent USDC payments on Arc L1 using Circle Nanopayments — proving that machine-to-machine commerce is economically viable at scale.
+## ðŸ“ Short Description
+Atlas Arc is a real-time dashboard where 20 autonomous AI agents settle sub-cent USDC payments on Arc L1 using Circle Nanopayments â€” proving that machine-to-machine commerce is economically viable at scale.
 
 ---
 
-## 📄 Long Description
+## ðŸ“„ Long Description
 
-Atlas Arc implements a **4-layer multi-agent hierarchy** (Scouts → Brains → Executors → Guardians) where each agent autonomously pays for the services it consumes — data, compute, and inference — using **USDC on the Arc L1 Testnet** via **Circle Programmable Wallets**.
+Atlas Arc implements a **4-layer multi-agent hierarchy** (Scouts â†’ Brains â†’ Executors â†’ Guardians) where each agent autonomously pays for the services it consumes â€” data, compute, and inference â€” using **USDC on the Arc L1 Testnet** via **Circle Programmable Wallets**.
 
 The system uses a **Random Forest ML model** to predict real-time demand spikes and dynamically adjust per-action pricing. A **Z-Score anomaly detector** monitors for bot attacks and automatically throttles suspicious agents.
 
@@ -27,20 +31,20 @@ The system uses a **Random Forest ML model** to predict real-time demand spikes 
 On traditional blockchains (Ethereum, even L2s), a sub-cent transaction costs **100x more in gas than the transaction itself**. This makes per-action pricing economically impossible. Arc + Circle Nanopayments eliminates this barrier entirely.
 
 ### What Atlas Arc Proves
-- ✅ **Per-action pricing (≤ $0.001)** is viable at scale
-- ✅ **50+ real on-chain transactions** settled autonomously on Arc Testnet
-- ✅ **99.9% margin retention** vs. -5,000% loss on traditional chains
+- âœ… **Per-action pricing (â‰¤ $0.001)** is viable at scale
+- âœ… **50+ real on-chain transactions** settled autonomously on Arc Testnet
+- âœ… **99.9% margin retention** vs. -5,000% loss on traditional chains
 
 ---
 
-## ⛽ Margin Explanation (Required)
+## â›½ Margin Explanation (Required)
 
 ![Margin Chart](./assets/margin_chart.png)
 
 | Metric | Traditional L1/L2 (Ethereum) | Circle Nanopayments on Arc |
 | :--- | :---: | :---: |
 | Transaction Value | $0.001 | $0.001 |
-| Avg Gas Fee | **$0.05 – $0.50** | **< $0.00001** |
+| Avg Gas Fee | **$0.05 â€“ $0.50** | **< $0.00001** |
 | Net Margin | **-5,000% (UNVIABLE)** | **+99.9% (PROFITABLE)** |
 
 **Failure Point on Traditional Chains:**  
@@ -51,14 +55,14 @@ USDC is the native gas token on Arc. Nanopayments eliminate gas overhead entirel
 
 ---
 
-## 📊 Transaction Frequency Data (Required: 50+ Transactions)
+## ðŸ“Š Transaction Frequency Data (Required: 50+ Transactions)
 
 ![ML Demand Prediction](./assets/ml_prediction.png)
 
 Our system generates continuous autonomous settlements. Every agent action (data query, ML inference, anomaly check) triggers a USDC micropayment:
 
-- **Transaction Rate:** ~1 settlement every 10–15 seconds
-- **Price Per Action:** $0.0003 – $0.009 (always ≤ $0.01)
+- **Transaction Rate:** ~1 settlement every 10â€“15 seconds
+- **Price Per Action:** $0.0003 â€“ $0.009 (always â‰¤ $0.01)
 - **Total Settled in Demo:** **50+ real transactions on Arc Testnet**
 
 **Live Explorer Proof:**
@@ -70,50 +74,50 @@ Our system generates continuous autonomous settlements. Every agent action (data
 
 ---
 
-## 🔧 Technology & Category Tags
+## ðŸ”§ Technology & Category Tags
 
 **Required Technologies:**
-- ✅ **Arc L1** — All transactions settle on Arc EVM-compatible Layer-1
-- ✅ **USDC** — Native gas token and settlement currency
-- ✅ **Circle Nanopayments** — Sub-cent high-frequency transaction infrastructure
-- ✅ **Circle Programmable Wallets** — Each agent holds its own developer-controlled wallet
+- âœ… **Arc L1** â€” All transactions settle on Arc EVM-compatible Layer-1
+- âœ… **USDC** â€” Native gas token and settlement currency
+- âœ… **Circle Nanopayments** â€” Sub-cent high-frequency transaction infrastructure
+- âœ… **Circle Programmable Wallets** â€” Each agent holds its own developer-controlled wallet
 
 **Stack:**
-`React` · `Vite` · `TypeScript` · `Express` · `Circle SDK` · `ML-Random-Forest` · `Simple-Statistics` · `Recharts` · `TailwindCSS` · `Neon PostgreSQL`
+`React` Â· `Vite` Â· `TypeScript` Â· `Express` Â· `Circle SDK` Â· `ML-Random-Forest` Â· `Simple-Statistics` Â· `Recharts` Â· `TailwindCSS` Â· `Neon PostgreSQL`
 
 ---
 
-## 🏗️ Architecture
+## ðŸ—ï¸ Architecture
 
 ![Transaction Flow](./assets/transaction_flow.png)
 
 ```
-User/Market → Scout Agents (5)
-                    ↓ (pay for data)
+User/Market â†’ Scout Agents (5)
+                    â†“ (pay for data)
              Brain Agents (5) [ML Demand Prediction]
-                    ↓ (pay for inference)
+                    â†“ (pay for inference)
              Executor Agents (5) [USDC Settlement via Circle]
-                    ↓ (verified by)
+                    â†“ (verified by)
              Guardian Agents (5) [Z-Score Anomaly Detection]
-                    ↓
+                    â†“
              Arc L1 Testnet (On-chain finality)
 ```
 
 ---
 
-## 🤖 Autonomous Agent Network
+## ðŸ¤– Autonomous Agent Network
 
 ![Neural Map](./assets/neural_map.png)
 
 ---
 
-## 💡 Circle Product Feedback (Required for $500 Bonus)
+## ðŸ’¡ Circle Product Feedback (Required for $500 Bonus)
 
 **Products Used:**
-1. **Arc L1** — Settlement layer for all agent transactions
-2. **USDC** — Both gas token and value transfer currency
-3. **Circle Programmable Wallets** — Developer-controlled wallets for each agent
-4. **Circle Nanopayments** — Enables economically viable sub-cent transactions
+1. **Arc L1** â€” Settlement layer for all agent transactions
+2. **USDC** â€” Both gas token and value transfer currency
+3. **Circle Programmable Wallets** â€” Developer-controlled wallets for each agent
+4. **Circle Nanopayments** â€” Enables economically viable sub-cent transactions
 
 **What Worked Well:**
 - **Deterministic sub-second finality** on Arc is a game-changer. Our agents can confirm a payment and immediately proceed to the next action without probabilistic waiting.
@@ -121,9 +125,9 @@ User/Market → Scout Agents (5)
 - **Circle SDK** (`@circle-fin/developer-controlled-wallets`) was straightforward to integrate with TypeScript.
 
 **What Could Be Improved:**
-- **WebSocket support for transaction status** — Currently we poll every 5 seconds for hash confirmation. A real-time push notification would reduce latency for high-frequency agents.
-- **Testnet faucet rate limits** — During high-frequency testing (50+ transactions), we hit faucet limits. A dedicated developer faucet with higher limits would help.
-- **SDK Error Messages** — Some SDK errors (e.g., insufficient funds) return generic messages. More descriptive errors would speed up debugging.
+- **WebSocket support for transaction status** â€” Currently we poll every 5 seconds for hash confirmation. A real-time push notification would reduce latency for high-frequency agents.
+- **Testnet faucet rate limits** â€” During high-frequency testing (50+ transactions), we hit faucet limits. A dedicated developer faucet with higher limits would help.
+- **SDK Error Messages** â€” Some SDK errors (e.g., insufficient funds) return generic messages. More descriptive errors would speed up debugging.
 
 **Recommendations:**
 - Add a **Nanopayments SDK** with built-in channel management so developers don't need to implement their own payment loop logic.
@@ -131,7 +135,7 @@ User/Market → Scout Agents (5)
 
 ---
 
-## 🛠️ Running Locally
+## ðŸ› ï¸ Running Locally
 
 ```bash
 # Clone
@@ -146,7 +150,7 @@ cp .env.example .env
 
 # Run
 npm run dev
-# → Server: http://localhost:3000
+# â†’ Server: http://localhost:3000
 ```
 
 ### Required `.env` Variables
@@ -161,11 +165,20 @@ DATABASE_URL=your_neon_postgresql_url
 
 ---
 
-## 📸 Demo
+## ðŸ“¸ Demo
 
-> **Video Demo:** Shows a full end-to-end transaction: Agent triggers payment → Circle SDK settles → Arc Explorer confirms.
+> **Video Demo:** Shows a full end-to-end transaction: Agent triggers payment â†’ Circle SDK settles â†’ Arc Explorer confirms.
 
 ---
 
 *Built for the **Agentic Economy on Arc** Hackathon | April 2026*  
-*Circle · Arc · Nanopayments · USDC*
+*Circle Â· Arc Â· Nanopayments Â· USDC*
+--
+title: Atlas Arc Dashboard
+emoji: ??
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+--
+

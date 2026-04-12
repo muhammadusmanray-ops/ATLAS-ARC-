@@ -148,7 +148,8 @@ export default function App() {
     isFetching.current = true;
 
     try {
-      const statsRes = await fetch('/api/stats');
+      const apiUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+      const statsRes = await fetch(`${apiUrl}/api/stats`);
       if (!statsRes.ok) throw new Error(`Stats API error: ${statsRes.status}`);
       
       const contentType = statsRes.headers.get("content-type");
@@ -161,7 +162,7 @@ export default function App() {
       setError(null);
       setIsLoading(false);
 
-      const logsRes = await fetch('/api/logs');
+      const logsRes = await fetch(`${apiUrl}/api/logs`);
       if (!logsRes.ok) throw new Error(`Logs API error: ${logsRes.status}`);
       
       const logsContentType = logsRes.headers.get("content-type");
@@ -174,14 +175,14 @@ export default function App() {
         setLogs(prev => [...prev.slice(-10), ...logsData].filter((v, i, a) => a.indexOf(v) === i));
       }
 
-      const txRes = await fetch('/api/transactions');
+      const txRes = await fetch(`${apiUrl}/api/transactions`);
       if (txRes.ok) {
         const txData = await txRes.json();
         setTransactions(txData);
       }
 
       // Fetch Circle Status
-      const circleRes = await fetch('/api/circle/status');
+      const circleRes = await fetch(`${apiUrl}/api/circle/status`);
       if (circleRes.ok) {
         const cData = await circleRes.json();
         setCircleStatus(cData);
@@ -266,36 +267,6 @@ export default function App() {
               <AlertTriangle className="w-4 h-4" />
               <span className="text-xs font-bold uppercase tracking-widest">Connection Error: {error}</span>
             </div>
-              <button 
-                onClick={() => setActiveTab('market')}
-                className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'market' ? 'text-[#00d2ff] border-b-2 border-[#00d2ff]' : 'text-gray-500 hover:text-gray-300'}`}
-              >
-                Market Engine
-              </button>
-              <button 
-                onClick={() => setActiveTab('agents')}
-                className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'agents' ? 'text-[#00d2ff] border-b-2 border-[#00d2ff]' : 'text-gray-500 hover:text-gray-300'}`}
-              >
-                Autonomous Agents
-              </button>
-              <button 
-                onClick={() => setActiveTab('ledger')}
-                className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'ledger' ? 'text-[#00d2ff] border-b-2 border-[#00d2ff]' : 'text-gray-500 hover:text-gray-300'}`}
-              >
-                Decentralized Ledger
-              </button>
-              <button 
-                onClick={() => setActiveTab('ai')}
-                className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'ai' ? 'text-[#00d2ff] border-b-2 border-[#00d2ff]' : 'text-gray-500 hover:text-gray-300'}`}
-              >
-                AI Analyst
-              </button>
-              <button 
-                onClick={() => setActiveTab('logs')}
-                className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'logs' ? 'text-[#00d2ff] border-b-2 border-[#00d2ff]' : 'text-gray-500 hover:text-gray-300'}`}
-              >
-                Access Logs
-              </button>
             <button 
               onClick={() => fetchData()}
               className="px-3 py-1 bg-red-500 text-white text-[10px] font-black uppercase tracking-widest hover:bg-red-600 transition-colors"

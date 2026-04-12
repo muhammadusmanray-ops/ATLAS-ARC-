@@ -7,21 +7,19 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install all dependencies
+# Install dependencies (only production if needed, but we need tsx)
 RUN npm install
 
-# Copy all source files
+# Copy source code
 COPY . .
 
-# Build the React frontend
-RUN npm run build
-
-# Expose HuggingFace Spaces default port
+# Expose the port Hugging Face expects
 EXPOSE 7860
 
 # Set production environment
 ENV NODE_ENV=production
 ENV PORT=7860
 
-# Start the server (serves both API + built frontend)
+# Run the server (Backend Only)
+# We use tsx because we are using .ts files directly
 CMD ["npx", "tsx", "server.ts"]

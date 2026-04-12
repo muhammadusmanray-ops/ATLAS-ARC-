@@ -74,13 +74,15 @@ const CIRCLE_WALLET_ID = process.env.CIRCLE_WALLET_ID; // The wallet from which 
 let circleClient: any = null;
 try {
   if (CIRCLE_API_KEY) {
-    circleClient = initiateDeveloperControlledWalletsClient({
+    const sdkConfig = {
       apiKey: CIRCLE_API_KEY,
-      entitySecret: CIRCLE_ENTITY_SECRET || '' // Will fail real transactions if missing, but allows server to start
-    });
+      entitySecret: CIRCLE_ENTITY_SECRET || ''
+    };
+    circleClient = initiateDeveloperControlledWalletsClient(sdkConfig);
+    console.log("[CIRCLE] SDK Client initialized successfully.");
   }
-} catch (e) {
-  console.log("[CIRCLE] SDK Init Failed (Missing configs)", e);
+} catch (e: any) {
+  console.log("[CIRCLE] SDK Init Failed:", e.message);
 }
 
 console.log("[CIRCLE] API Key Loaded:", CIRCLE_API_KEY ? "YES" : "NO");
@@ -106,7 +108,7 @@ process.on('unhandledRejection', (reason, promise) => {
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
   app.use(cors());
   app.use(express.json());
@@ -205,21 +207,22 @@ async function startServer() {
     // --- REAL SDK INTEGRATION ---
     if (circleClient && CIRCLE_ENTITY_SECRET && CIRCLE_WALLET_ID && !isTransactionPending) {
       try {
+        if (!circleClient.createTransaction) {
+           throw new Error("Circle Client not fully initialized - createTransaction missing");
+        }
         isTransactionPending = true; // Lock
         console.log(`[CIRCLE] Attempting REAL testnet transfer for Agent ${agentId} - Amount: ${amount.toFixed(6)}`);
         
-        const response = await circleClient.createTransaction({
+        const txParams = {
           walletId: CIRCLE_WALLET_ID,
           tokenId: process.env.CIRCLE_TOKEN_ID || "15dc2b5d-0994-58b0-bf8c-3a0501148ee8", 
           destinationAddress: "0x45d4391526b865c1a6fa435bfec57a6810f0981f", 
           amounts: [amount.toFixed(6)],
-          fee: {
-            type: "LEVEL",
-            config: {
-              feeLevel: "MEDIUM"
-            }
-          }
-        });
+          idempotencyKey: `sim-${Date.now()}-${Math.floor(Math.random()*1000)}`
+        };
+        console.log("[CIRCLE] TX Params:", JSON.stringify(txParams, null, 2));
+
+        const response = await circleClient.createTransaction(txParams);
         
         if (response?.data?.id) {
           txId = response.data.id;
@@ -253,7 +256,10 @@ async function startServer() {
           }
         }
       } catch (err: any) {
-         const errorMsg = err.response?.data?.message || err.message;
+         let errorMsg = err.response?.data?.message || err.message;
+         if (err.response?.data?.validationErrors) {
+           errorMsg += " | Validation Errors: " + JSON.stringify(err.response.data.validationErrors);
+         }
          console.error(`[CIRCLE SDK ERROR] Failed: ${errorMsg}`);
          status = "FAILED_VAL_ERROR";
          isTransactionPending = false; // Release lock on error
