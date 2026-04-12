@@ -8,6 +8,7 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
+    allowedHosts: true,
     watch: {
       ignored: ['**/ledger.json']
     }

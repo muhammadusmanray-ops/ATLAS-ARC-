@@ -7,18 +7,6 @@ sdk: docker
 app_port: 7860
 ---
 
-> **Required Technologies Used:** Arc L1 Â· USDC Â· Circle Nanopayments Â· Circle Programmable Wallets
-
----
-
-## ðŸ“‹ Project Title
-**Atlas Arc: ML-Driven Agentic Economy Dashboard**
-
----
-
-## ðŸ“ Short Description
-Atlas Arc is a real-time dashboard where 20 autonomous AI agents settle sub-cent USDC payments on Arc L1 using Circle Nanopayments â€” proving that machine-to-machine commerce is economically viable at scale.
-
 ---
 
 ## ðŸ“„ Long Description

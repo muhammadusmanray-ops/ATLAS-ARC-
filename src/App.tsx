@@ -408,7 +408,7 @@ export default function App() {
                       onChange={(e) => setChatInput(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                       placeholder="ENTER QUERY FOR NEURAL ANALYSIS..."
-                      className="flex-1 bg-black/40 border border-[#00d2ff33] p-4 text-sm terminal-text focus:outline-none focus:border-[#00d2ff] transition-colors placeholder:text-gray-600"
+                      className="flex-1 bg-black/40 text-white border border-[#00d2ff33] p-4 text-sm terminal-text focus:outline-none focus:border-[#00d2ff] transition-colors placeholder:text-gray-600"
                     />
                     <button 
                       onClick={handleSendMessage}
