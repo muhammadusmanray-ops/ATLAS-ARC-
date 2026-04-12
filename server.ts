@@ -285,8 +285,10 @@ async function startServer() {
       hash: txHash
     };
     
-    // Save to Neon DB (Cloud) + local JSON backup
-    saveTransactionToDB(tx);
+    // Save to Neon DB (Cloud) only if it's a real or rare transaction
+    if (status !== "MOCK_MODE" || Math.random() < 0.05) {
+      saveTransactionToDB(tx);
+    }
     try {
       const currentLedger = JSON.parse(fs.readFileSync(LEDGER_PATH, 'utf-8'));
       currentLedger.unshift(tx);
@@ -392,8 +394,10 @@ async function startServer() {
   const rfModel = new RandomForestRegression(options);
   let isModelTrained = false;
 
-  // Simulation Loop (Updates every 5 seconds)
+  // Simulation Loop (Visual updates every 1.5 seconds)
+  let loopCount = 0;
   setInterval(() => {
+    loopCount++;
     try {
       // 1. Generate Base Demand with Market Influence
       const marketVolatility = (liveMarketData.sol % 10) / 10; // Use SOL price tail as noise
@@ -469,33 +473,35 @@ async function startServer() {
         status: "SETTLED_ON_ARC",
         hash: txHash
       });
-      // Save to Neon DB (non-blocking)
-      saveTransactionToDB(simulatedTx);
+      if (loopCount % 10 === 0) {
+        saveTransactionToDB(simulatedTx);
+        
+        saveMetricsToDB({
+          currentDemand, predictedDemand,
+          surgeMultiplier: parseFloat(surgeMultiplier.toFixed(2)),
+          zScore: parseFloat(zScore.toFixed(2)),
+          isAnomaly,
+          btc: liveMarketData.btc,
+          eth: liveMarketData.eth,
+          sol: liveMarketData.sol
+        });
+      }
 
-      // Save Market Metrics to Neon DB every cycle
-      saveMetricsToDB({
-        currentDemand, predictedDemand,
-        surgeMultiplier: parseFloat(surgeMultiplier.toFixed(2)),
-        zScore: parseFloat(zScore.toFixed(2)),
-        isAnomaly,
-        btc: liveMarketData.btc,
-        eth: liveMarketData.eth,
-        sol: liveMarketData.sol
-      });
-
-      // 6. Update Hierarchical Agents via Manager + Save active agents to Neon DB
+      // 6. Update Hierarchical Agents via Manager
       agentManager.update(isAnomaly, currentDemand);
-      // Save active agents to Neon DB
-      agentManager.getAgents()
-        .filter((a: any) => a.status === 'ACTIVE' && a.lastAction)
-        .forEach((a: any) => saveAgentActivityToDB(a));
+      
+      if (loopCount % 10 === 0) {
+        agentManager.getAgents()
+          .filter((a: any) => a.status === 'ACTIVE' && a.lastAction)
+          .forEach((a: any) => saveAgentActivityToDB(a));
+      }
 
       // 7. Evolve Neural Weights
       neuralWeights = neuralWeights.map(w => Math.max(0, Math.min(1, w + (Math.random() - 0.5) * 0.1)));
     } catch (e) {
       console.error("[SIMULATION ERROR]", e);
     }
-  }, 20000); // 20 Seconds ensures testnet stability and avoids nonce spam
+  }, 1500); // Super fast 1.5 Seconds for insane UI speed
 
   // --- API Routes ---
   app.get("/api/health", (req, res) => {
