@@ -422,19 +422,19 @@ async function startServer() {
       }
 
       // 3. Train Machine Learning Model (Random Forest)
-      if (historyValues.length >= 15 && demandHistory.every(h => h.demand !== undefined)) {
+      if (demandHistory.length >= 10 && demandHistory.every(h => h && typeof h.demand === 'number')) {
         try {
-          // Prepare data for Random Forest: [Time index, SOL Price, BTC Price] -> [Demand]
           const trainingFeatures = demandHistory.map((h, i) => [i, liveMarketData.sol || 100, liveMarketData.btc || 60000]);
           const trainingLabels = demandHistory.map(h => h.demand);
           
-          rfModel.train(trainingFeatures, trainingLabels);
-          isModelTrained = true;
-          
-          // Predict next demand based on current features
-          const nextFeatures = [[demandHistory.length, liveMarketData.sol || 100, liveMarketData.btc || 60000]];
-          const predictions = rfModel.predict(nextFeatures);
-          predictedDemand = Math.max(10, Math.floor(predictions[0]));
+          if (trainingFeatures.length > 0 && trainingLabels.length > 0) {
+            rfModel.train(trainingFeatures, trainingLabels);
+            isModelTrained = true;
+            
+            const nextFeatures = [[demandHistory.length, liveMarketData.sol || 100, liveMarketData.btc || 60000]];
+            const predictions = rfModel.predict(nextFeatures);
+            predictedDemand = Math.max(10, Math.floor(predictions[0]));
+          }
         } catch (mlErr) {
           console.error("[ML TRAINING ERROR] Skipping this cycle:", mlErr);
           predictedDemand = currentDemand;
@@ -589,9 +589,13 @@ async function startServer() {
   // --- Vite Middleware ---
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
-      server: { 
+      configFile: path.resolve(__dirname, 'vite.config.ts'),
+      server: {
         middlewareMode: true,
-        allowedHosts: ['hewjdewjdbqwjdwej-atlasarcdashbord.hf.space', '.hf.space', 'all']
+        allowedHosts: true,
+        watch: {
+          ignored: ['**/ledger.json']
+        }
       },
       appType: "spa",
     });

@@ -7,11 +7,14 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies (only production if needed, but we need tsx)
+# Install ALL dependencies
 RUN npm install
 
 # Copy source code
 COPY . .
+
+# Build the frontend for production
+RUN npm run build
 
 # Expose the port Hugging Face expects
 EXPOSE 7860
@@ -20,6 +23,5 @@ EXPOSE 7860
 ENV NODE_ENV=production
 ENV PORT=7860
 
-# Run the server (Backend Only)
-# We use tsx because we are using .ts files directly
+# Run the server
 CMD ["npx", "tsx", "server.ts"]
