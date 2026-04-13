@@ -290,9 +290,11 @@ async function startServer() {
       saveTransactionToDB(tx);
     }
     try {
-      const currentLedger = JSON.parse(fs.readFileSync(LEDGER_PATH, 'utf-8'));
-      currentLedger.unshift(tx);
-      fs.writeFileSync(LEDGER_PATH, JSON.stringify(currentLedger.slice(0, 100), null, 2));
+      (async () => {
+        const currentLedger = JSON.parse(await fs.promises.readFile(LEDGER_PATH, 'utf-8'));
+        currentLedger.unshift(tx);
+        await fs.promises.writeFile(LEDGER_PATH, JSON.stringify(currentLedger.slice(0, 50), null, 2));
+      })();
     } catch (err) {
       console.error("[LEDGER ERROR] Failed to write local backup:", err);
     }
