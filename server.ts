@@ -319,7 +319,7 @@ async function startServer() {
       this.agents.push({ id: "MYTHOS", name: "MYTHOS_CORE", role: "BOSS", status: "ONLINE", task: "ORCHESTRATION", layer: 0 });
       
       // Level 1: Scouts (Fetchers)
-      const scoutTasks = ["BTC_PRICE_SYNC", "SOL_LIQUIDITY_SCAN", "SENTIMENT_ANALYSIS", "WHALE_MOVEMENT", "MARKET_SENTINEL"];
+      const scoutTasks = ["ARC_DEMAND_SYNC", "USDC_LIQUIDITY_SCAN", "SENTIMENT_ANALYSIS", "WHALE_MOVEMENT", "MARKET_SENTINEL"];
       scoutTasks.forEach((task, i) => {
         this.agents.push({ id: `SC-${i+1}`, name: `SCOUT_${i+1}`, role: "SCOUT", status: "IDLE", task, layer: 1 });
       });
@@ -349,16 +349,23 @@ async function startServer() {
           
           // Assign dynamic actions and trigger simulated payments
           if (agent.role === "SCOUT") {
-            agent.lastAction = `Synced ${agent.id.includes('BTC') ? 'BTC' : 'SOL'} data at ${new Date().toLocaleTimeString()}`;
+            const arcActions = [
+              `Fetched USDC demand spike: ${Math.floor(Math.random()*200+100)} req/s`,
+              `ARC-L1 block confirmed: #${Math.floor(Math.random()*99999+800000)}`,
+              `Circle Nanopayment channel: ${Math.floor(Math.random()*50+50)} txs queued`,
+              `USDC price oracle synced: $1.0000`,
+              `ARC testnet latency: ${Math.floor(Math.random()*50+20)}ms`
+            ];
+            agent.lastAction = arcActions[Math.floor(Math.random() * arcActions.length)];
           }
           if (agent.role === "BRAIN") {
             agent.lastAction = `ML Inference: Predicted demand spike to ${predictedDemand}`;
           }
           if (agent.role === "EXECUTOR") {
-            const payAmount = Math.random() * 0.009; // Ensure all agent actions are sub-cent
-            agent.lastAction = `Settling $${payAmount.toFixed(4)} USDC...`;
+            const payAmount = parseFloat((Math.random() * 0.0089 + 0.0001).toFixed(6)); // $0.0001–$0.009, always sub-cent
+            agent.lastAction = `Circle SDK: Sending $${payAmount.toFixed(6)} USDC on ARC-L1...`;
             simulateCirclePayment(payAmount, agent.id).then(tx => {
-              agent.lastAction = `TX: ${tx.id.substring(0, 10)}... settled`;
+              agent.lastAction = `TX: ${tx.id.substring(0, 10)}... USDC settled on ARC`;
             });
           }
           if (agent.role === "GUARDIAN") {

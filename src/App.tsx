@@ -72,10 +72,11 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const isFetching = useRef(false);
   const [logs, setLogs] = useState<string[]>([
-    "[SERVER] DEMAND GENERATED: 180",
-    "[ML] PREDICTED SURGE: 1.8x",
-    "[UI] UPDATE DASHBOARD STATS",
-    "[PAYMENT] PENDING INTEGRATION..."
+    "[ARC-L1] ATLAS NODE ONLINE — CIRCLE SDK ACTIVE",
+    "[CIRCLE] USDC NANOPAYMENT CHANNEL INITIALIZED",
+    "[ML] RANDOM FOREST MODEL LOADED — 10 ESTIMATORS",
+    "[EXECUTOR] CIRCLE SDK: READY TO SETTLE USDC ON ARC",
+    "[GUARDIAN] Z-SCORE ANOMALY DETECTOR: ARMED"
   ]);
   const [transactions, setTransactions] = useState<any[]>([]);
   const [circleStatus, setCircleStatus] = useState<any>(null);
