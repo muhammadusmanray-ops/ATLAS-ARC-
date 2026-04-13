@@ -584,7 +584,7 @@ async function startServer() {
   });
 
   app.get("/api/transactions", (req, res) => {
-    res.json(transactionHistory);
+    res.json(transactionHistory.slice(0, 50));
   });
 
   // Prevent /api/* from falling back to HTML (Express 5 syntax)

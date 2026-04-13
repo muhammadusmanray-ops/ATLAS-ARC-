@@ -125,7 +125,7 @@ export default function App() {
           model: "llama-3.3-70b-versatile",
           messages: [
             { role: "system", content: `You are the Atlas Arc AI Analyst, a specialized AI for the Atlas Arc Agentic Economy. 
-              Analyze market trends and pricing. BTC: $${stats?.market?.btc}, SOL: $${stats?.market?.sol}, Demand: ${stats?.currentDemand}req/s. 
+              Analyze market trends and pricing. Network: ARC-TESTNET, Currency: USDC, Demand: ${stats?.currentDemand}req/s. 
               Be concise, professional, and focus on the Circle-powered economy.` },
             ...messages.map(m => ({ role: m.role, content: m.content })),
             { role: "user", content: userMessage }
@@ -310,16 +310,16 @@ export default function App() {
                 {/* LIVE MARKET TICKER - MOVED TO RIGHT TO PREVENT OVERLAP */}
                 <div className="flex items-center gap-4 px-3 py-1 bg-black/40 border border-[#00d2ff22] rounded-md">
                   <div className="flex items-center gap-1.5 border-r border-white/10 pr-3">
-                    <span className="text-[7px] text-gray-500 font-bold uppercase">BTC</span>
-                    <span className="text-[9px] text-white font-black">${stats?.market?.btc?.toLocaleString() || "---"}</span>
+                    <span className="text-[7px] text-gray-500 font-bold uppercase">ASSET</span>
+                    <span className="text-[9px] text-white font-black">USDC (Native)</span>
                   </div>
                   <div className="flex items-center gap-1.5 border-r border-white/10 pr-3">
-                    <span className="text-[7px] text-gray-500 font-bold uppercase">SOL</span>
-                    <span className="text-[9px] text-[#f59e0b] font-black">${stats?.market?.sol?.toLocaleString() || "---"}</span>
+                    <span className="text-[7px] text-gray-500 font-bold uppercase">NETWORK</span>
+                    <span className="text-[9px] text-[#00d2ff] font-black">ARC-TESTNET</span>
                   </div>
                   <div className="flex items-center gap-1.5 border-r border-white/10 pr-3">
-                    <span className="text-[7px] text-gray-500 font-bold uppercase">ETH</span>
-                    <span className="text-[9px] text-[#00d2ff] font-black">${stats?.market?.eth?.toLocaleString() || "---"}</span>
+                    <span className="text-[7px] text-gray-500 font-bold uppercase">GAS_TOKEN</span>
+                    <span className="text-[9px] text-[#00ff9d] font-black">USDC</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className={`w-1.5 h-1.5 rounded-full ${circleStatus ? 'bg-emerald-500 animate-pulse' : 'bg-red-500'}`} />
